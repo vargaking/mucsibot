@@ -1,6 +1,7 @@
 import discord
 import os
 import random
+import xmltodict
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -10,22 +11,9 @@ welcomes = ['jó reggelt', 'hali', 'szia', 'hello', 'helló', 'sziasztok', 'jo e
 load_dotenv()
 
 def kretenKaromkodasok():
-        # open DirtyWords.xml
-        with open('DirtyWords.xml', 'r') as f:
-            # read the xml file
-            xml = f.read()
-            # split the xml file into lines
-            xml = xml.split('\n')
-            # create a list for the words
-            words = []
-            # loop through the lines
-            for line in xml:
-                # if the line contains a word
-                if '<Word>' in line:
-                    # add the word to the list
-                    words.append(line.replace('<Word>', '').replace('</Word>', ''))
-
-            return words
+    with open('DirtyWords.xml', 'r') as f:
+        words = xmltodict.parse(f.read())
+    return words['DirtyWords']['Word']
             
 kretenKaromkodasokList = kretenKaromkodasok()
 
